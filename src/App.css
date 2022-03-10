@@ -7,9 +7,15 @@
 }
 
 :root {
-    --primary: #2BD17F;
-    --error: #EB5757;
     --background: #0A3545;
-    --input: #224958;
     --card: #082C38;
+    --error: #EB5757;
+    --input: #224958;
+    --primary: #2BD17F;
+    --text: #fff;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
 }
