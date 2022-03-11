@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
-
+import MyMovies from './MyMovies';
 
 const Login = () => {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false);
     const [error, setError] = useState('');
 
 
-
     const onSubmit = async (e) => {
-        console.log('Form submitted!')
+        console.log('Form submitted!');
         e.preventDefault();
-        setEmail('');
-        setPassword('');
+
+        const formdata = new FormData();
+        formdata.append("identifier", email);
+        formdata.append("password", password);
+
+        const requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        await fetch("https://zm-movies-assignment.herokuapp.com/api/auth/local", requestOptions)
+            // .then(response => response.text())
+            .then(response => console.log(response.status))
+            .then( () => { setLoggedIn(true); })
+            // .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     };
 
     const onEmailChange = e => {
@@ -25,6 +41,7 @@ const Login = () => {
 
 
     return (
+        loggedIn ? <MyMovies /> :
         <div className='SignIn'>
             <h1> Sign in </h1>
             <form onSubmit={onSubmit}>
