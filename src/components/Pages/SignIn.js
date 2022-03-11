@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+const onSubmit = e => {
+    console.log('Form submitted!')
+    e.preventDefault();
+};
 
 
 const SignIn = () => {
     return (
         <div className='SignIn'>
             <h1> Sign in </h1>
-            <form>
-
+            <form onSubmit={onSubmit}>
                 <input
                     placeholder='Email'
                     type='email'
@@ -19,18 +23,15 @@ const SignIn = () => {
 
                 <input
                     type="checkbox"
-                    id="vehicle3"
-                    name="vehicle3"
-                    value="Boat"
+                    name="checkbox"
                 />
-                <label htmlFor="vehicle3"> Remember me </label>
+                <label htmlFor="checkbox"> Remember me </label>
 
                 <input
                     className='button-login'
-                    type="button"
+                    type="submit"
                     value="Login"
                 />
-
             </form>
         </div>
     );
