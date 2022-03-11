@@ -80,13 +80,16 @@ Sign In Form
 
 .SignIn .button-login {
     background-color: var(--primary);
+    border: none;
     border-radius: 10px;
+    color: var(--text);
     cursor: pointer;
     display: flex;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
+    margin: 20px 0;
     padding: 15px 126px;
 }
 
