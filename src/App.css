@@ -29,6 +29,7 @@ h1 {
     font-size: 64px;
     font-weight: 600;
     line-height: 80px;
+    margin: 40px 0;
 }
 
 .App {
@@ -40,8 +41,7 @@ h1 {
 }
 
 .SignIn form {
-    display: flex;
-    flex-direction: column;
+
 }
 
 .SignIn input {
@@ -49,8 +49,18 @@ h1 {
     border: none;
     border-radius: 10px;
     color: var(--text);
+    display: block;
+    margin: 20px 0;
+    padding: 14px;
+    width: 100%;
+}
+
+.SignIn input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    display: inline-block;
     margin: 10px 0;
-    padding: 12px;
+    width: auto;
 }
 
 .SignIn input::placeholder {
@@ -64,7 +74,7 @@ h1 {
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    margin: 20px 0;
     padding: 20px 140px;
     width: auto;
 }
+
