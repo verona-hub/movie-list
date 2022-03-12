@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React  from 'react';
+
 
 const SignIN = ({ onSubmit, onEmailChange, onPasswordChange, email, password }) => {
 
@@ -32,7 +33,7 @@ const SignIN = ({ onSubmit, onEmailChange, onPasswordChange, email, password }) 
                 />
                 <label htmlFor="checkbox"> Remember me </label>
 
-                <button className='button-login'> Login </button>
+                <button> Login </button>
             </form>
         </div>
     );

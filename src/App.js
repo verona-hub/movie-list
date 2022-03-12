@@ -3,7 +3,8 @@ import './App.css';
 
 // Components
 import SignIN from './components/Pages/SignIN';
-import MyMovies from './components/Pages/MyMovies';
+import MovieList from './components/Pages/EmptyMovies';
+import LoginError from './components/Utilities/LoginError';
 
 
 const App = () => {
@@ -28,10 +29,15 @@ const App = () => {
         };
 
         await fetch("https://zm-movies-assignment.herokuapp.com/api/auth/local", requestOptions)
-            // .then(response => response.text())
-            .then(response => console.log(response.status))
-            .then( () => { setLoggedIn(true); })
-            // .then(result => console.log(result))
+
+            .then(response => {
+                console.log(response)
+                return response
+            })
+            .then( (response) => {
+                response.status === 200 && setLoggedIn(true) && setError('');
+                response.status === 400 && setError(response.statusText);
+            })
             .catch(error => console.log('error', error));
     };
 
@@ -45,18 +51,19 @@ const App = () => {
 
     return (
         <div className="App">
-            {
-                loggedIn
-                    ? <MyMovies/>
-                    : <SignIN
-                        onSubmit={ onSubmit }
-                        onEmailChange={ onEmailChange }
-                        onPasswordChange={ onPasswordChange }
-                        email={ email }
-                        password={ password }
-                    />
+            { !loggedIn
+                ? <SignIN
+                    onSubmit={ onSubmit }
+                    onEmailChange={ onEmailChange }
+                    onPasswordChange={ onPasswordChange }
+                    email={ email }
+                    password={ password } />
+                : <MovieList />
             }
 
+            {
+                error && !loggedIn && <LoginError error={error} />
+            }
         </div>
     );
 };
