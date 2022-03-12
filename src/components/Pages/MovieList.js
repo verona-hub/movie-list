@@ -1,13 +1,11 @@
 import React from 'react';
-import EmptyMovies from './EmptyMovies';
-import CreateMovie from './CreateMovie';
 
 
 const MovieList = () => {
+
     return (
         <div>
-            {/*<EmptyMovies />*/}
-            <CreateMovie />
+            <h2> This is your movie list </h2>
         </div>
     );
 };

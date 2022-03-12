@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import './App.css';
 
 // Components
+import CreateMovie from './components/Pages/CreateMovie';
+import Homepage from './components/Pages/Homepage';
 import SignIN from './components/Pages/SignIN';
-import MovieList from './components/Pages/EmptyMovies';
 import LoginError from './components/Utilities/LoginError';
+import MovieList from './components/Pages/MovieList';
 
 
 const App = () => {
@@ -50,21 +53,26 @@ const App = () => {
     };
 
     return (
-        <div className="App">
-            { !loggedIn
-                ? <SignIN
-                    onSubmit={ onSubmit }
-                    onEmailChange={ onEmailChange }
-                    onPasswordChange={ onPasswordChange }
-                    email={ email }
-                    password={ password } />
-                : <MovieList />
-            }
+        <BrowserRouter>
+            <div className="App">
+                <Routes>
+                    <Route path='/' element={
+                        <Homepage
+                            loggedIn={ loggedIn }
+                            onSubmit={ onSubmit }
+                            onEmailChange={ onEmailChange }
+                            onPasswordChange={ onPasswordChange }
+                            email={ email }
+                            password={ password }
+                            error={ error }
+                        />
+                    } />
 
-            {
-                error && !loggedIn && <LoginError error={error} />
-            }
-        </div>
+                    <Route path='/create-movie' element={CreateMovie}/>
+                </Routes>
+                {/*<Link to='/create-movie'> Test </Link>*/}
+            </div>
+        </BrowserRouter>
     );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const LoginError = ({ error }) => {
     return (
         <div className="LoginError">
@@ -7,5 +8,6 @@ const LoginError = ({ error }) => {
         </div>
     );
 };
+
 
 export default LoginError;
