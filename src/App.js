@@ -55,7 +55,7 @@ const App = () => {
             <div className="App">
                 <Routes>
                     { !loggedIn ?
-                        <Route index element={
+                        <Route path='/' element={
                             <SignIN
                                 onSubmit={ onSubmit }
                                 onEmailChange={ onEmailChange }
@@ -64,10 +64,8 @@ const App = () => {
                                 password={ password }
                             />
                         } />
-
-
                         :
-                        <Route exact path='/movie-list' element={MovieList}/>
+                        <Route path='/' element={ <MovieList/> }/>
                     }
 
                     { /*Display Error message if wrong password and if not logged in */
