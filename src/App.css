@@ -55,6 +55,28 @@ h3 {
     line-height: 40px;
 }
 
+.body-small {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+button {
+    background-color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    margin: 20px auto;
+    padding: 15px 126px;
+}
+
 /*
 Sign In Form
 */
@@ -90,30 +112,41 @@ Sign In Form
     padding: 5px;
 }
 
-button {
-    background-color: var(--primary);
-    border: none;
-    border-radius: 10px;
-    color: var(--text);
-    cursor: pointer;
-    display: flex;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    margin: 20px auto;
-    padding: 15px 126px;
-}
+
+
+/*
+Movie List
+*/
 
 .MovieList button {
     margin: 30px 0;
     padding: 16px 28px;
 }
 
-.test {
-    text-decoration: none;
+
+
+/*
+Drop Box
+*/
+
+.drop-box {
+    background-color: var(--input);
+    border: 2px dashed var(--text);
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 473px;
+    height: 504px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+
+.drop-box p {
+    margin: 10px;
+}
+
 
 
 /*
