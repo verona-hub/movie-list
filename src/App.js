@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 
 // Components
-import CreateMovie from './components/Pages/CreateMovie';
-import Homepage from './components/Pages/Homepage';
 import SignIN from './components/Pages/SignIN';
-import LoginError from './components/Utilities/LoginError';
 import MovieList from './components/Pages/MovieList';
+import LoginError from './components/Utilities/LoginError';
 
 
 const App = () => {
@@ -56,21 +54,26 @@ const App = () => {
         <BrowserRouter>
             <div className="App">
                 <Routes>
-                    <Route path='/' element={
-                        <Homepage
-                            loggedIn={ loggedIn }
-                            onSubmit={ onSubmit }
-                            onEmailChange={ onEmailChange }
-                            onPasswordChange={ onPasswordChange }
-                            email={ email }
-                            password={ password }
-                            error={ error }
-                        />
-                    } />
+                    { !loggedIn ?
+                        <Route index element={
+                            <SignIN
+                                onSubmit={ onSubmit }
+                                onEmailChange={ onEmailChange }
+                                onPasswordChange={ onPasswordChange }
+                                email={ email }
+                                password={ password }
+                            />
+                        } />
 
-                    <Route path='/create-movie' element={CreateMovie}/>
+
+                        :
+                        <Route exact path='/movie-list' element={MovieList}/>
+                    }
+
+                    { /*Display Error message if wrong password and if not logged in */
+                        error && !loggedIn && <LoginError error={ error }/>
+                    }
                 </Routes>
-                {/*<Link to='/create-movie'> Test </Link>*/}
             </div>
         </BrowserRouter>
     );
