@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 
 // Components
-import SignIN from './components/Pages/SignIN';
-import MovieList from './components/Pages/MovieList';
+import CreateMovie from "./components/Pages/CreateMovie";
 import LoginError from './components/Utilities/LoginError';
+import MovieList from './components/Pages/MovieList';
+import SignIN from './components/Pages/SignIN';
 
 
 const App = () => {
@@ -67,6 +68,7 @@ const App = () => {
                         :
                         <Route path='/' element={ <MovieList/> }/>
                     }
+                    <Route path='/create-movie' element={ <CreateMovie/> } />
 
                     { /*Display Error message if wrong password and if not logged in */
                         error && !loggedIn && <LoginError error={ error }/>
