@@ -73,6 +73,11 @@ const App = () => {
                         error && !loggedIn && <LoginError error={ error }/>
                     }
                 </Routes>
+                <footer>
+                    <div className='vector-wrapper'>
+
+                    </div>
+                </footer>
             </div>
         </BrowserRouter>
     );

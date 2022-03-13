@@ -24,6 +24,7 @@ body {
     font-weight: 400;
     line-height: 24px;
     min-height: 100vh;
+    position: relative;
     text-align: center;
 }
 
@@ -84,11 +85,12 @@ button,
     padding: 15px 126px;
 }
 
-/*
-Sign In Form
-*/
+.button {
+    margin: auto;
+    padding: 12px;
+}
 
-.SignIn input {
+input {
     background-color: var(--input);
     border: none;
     border-radius: 10px;
@@ -103,9 +105,28 @@ Sign In Form
     width: 100%;
 }
 
-.SignIn input::placeholder {
+input::placeholder {
     opacity: 1 !important;
 }
+
+input:focus {
+    outline-style: solid;
+    outline-color: var(--input);
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+}
+
+footer .vector-wrapper {
+}
+
+
+/*
+Sign in
+*/
 
 .SignIn input[type="checkbox"] {
     -webkit-appearance: checkbox;
@@ -119,6 +140,11 @@ Sign In Form
     padding: 5px;
 }
 
+.SignIn section {
+}
+
+
+
 
 
 /*
@@ -130,11 +156,26 @@ Movie List
     padding: 16px 28px;
 }
 
-
+/*
+CreateMovie
+*/
+.CreateMovie {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
 /*
-Drop Box
+CreateMovie - Image wrapper
 */
+
+.CreateMovie .image-wrapper {
+    padding: 30px;
+}
+
+.CreateMovie .image-wrapper h2 {
+    margin-bottom: 50px;
+}
 
 .drop-box {
     background-color: var(--input);
@@ -154,7 +195,57 @@ Drop Box
     margin: 10px;
 }
 
-.cancel-button {
+/*
+Create Movie - Text wrapper
+*/
+
+.CreateMovie .text-wrapper {
+    display: flex;
+    margin: 0 60px;
+    padding: 10px;
+}
+
+.CreateMovie .text-wrapper form {
+    margin-top: 30%;
+}
+
+.CreateMovie .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15%;
+}
+
+.CreateMovie .input-wrapper input {
+    margin: 10px 0;
+}
+
+.CreateMovie .input-title {
+    width: 370px;
+}
+
+.CreateMovie input::-webkit-outer-spin-button,
+.CreateMovie input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.CreateMovie input[type=number] {
+    -moz-appearance:textfield;
+}
+
+.CreateMovie .input-year {
+    width: 220px;
+}
+
+.CreateMovie .buttons-wrapper {
+    display: flex;
+}
+
+.CreateMovie .button {
+    width: 175px;
+}
+
+.CreateMovie .cancel-button {
     background-color: var(--background);
     border: 1px solid var(--text);
 }
@@ -168,4 +259,19 @@ Error
 .LoginError {
     color: var(--error);
     font-size: 48px;
+}
+
+
+/*
+Mobile
+*/
+
+@media (max-width: 900px) {
+    .CreateMovie {
+        min-height: 100vh;
+    }
+
+    .CreateMovie form {
+        margin-bottom: 100px;
+    }
 }
