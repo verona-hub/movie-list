@@ -61,7 +61,14 @@ h3 {
     line-height: 24px;
 }
 
-button {
+.body-regular {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+button,
+.button {
     background-color: var(--primary);
     border: none;
     border-radius: 10px;
@@ -145,6 +152,11 @@ Drop Box
 
 .drop-box p {
     margin: 10px;
+}
+
+.cancel-button {
+    background-color: var(--background);
+    border: 1px solid var(--text);
 }
 
 

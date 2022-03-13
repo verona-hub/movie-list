@@ -2,6 +2,16 @@ import React from 'react';
 
 
 const CreateMovie = () => {
+
+    const onCancel = () => {
+        console.log('Request cancelled!')
+    };
+
+    const onSubmit = () => {
+        console.log('Request submitted!')
+    };
+
+
     return (
         <div>
             <h2> Create a new movie </h2>
@@ -24,6 +34,18 @@ const CreateMovie = () => {
                     id='publishing-year'
                     placeholder='Publishing year'
                     type='number'
+                />
+                <input
+                    className='button cancel-button body-regular'
+                    onClick={onCancel}
+                    type='button'
+                    value='Cancel'
+                />
+                <input
+                    className='button'
+                    onClick={onSubmit}
+                    type='button'
+                    value='Submit'
                 />
             </form>
         </div>

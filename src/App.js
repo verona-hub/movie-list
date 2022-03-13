@@ -17,7 +17,6 @@ const App = () => {
     const [error, setError] = useState('');
 
     const onSubmit = async (e) => {
-        console.log('Form submitted!');
         e.preventDefault();
 
         const formdata = new FormData();
