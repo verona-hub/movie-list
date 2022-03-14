@@ -34,7 +34,7 @@ const SignIN = ({ onSubmit, onEmailChange, onPasswordChange, email, password }) 
                     />
                     <label htmlFor="checkbox"> Remember me </label>
 
-                    <button> Login</button>
+                    <button> Login </button>
                 </form>
             </section>
         </div>
