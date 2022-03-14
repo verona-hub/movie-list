@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const CreateMovie = () => {
 
+    const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [year, setYear] = useState('');
 
@@ -21,6 +22,24 @@ const CreateMovie = () => {
     };
 
     const onSubmit = () => {
+
+        const formdata = new FormData();
+        formdata.append("data", title);
+        // formdata.append("data", year);
+        formdata.append("files.poster", image, "file");
+
+
+        const requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch("https://zm-movies-assignment.herokuapp.com/api/movies", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
         console.log('Request submitted!')
     };
 
@@ -38,9 +57,12 @@ const CreateMovie = () => {
 
     const onDrop = e => {
         e.preventDefault();
+
         const file = e.dataTransfer.files;
         checkFileType(file);
-        console.log(file);
+        setImage(file[0]);
+
+        console.log(file[0].name);
     };
 
     const checkFileType = file => {
@@ -78,14 +100,17 @@ const CreateMovie = () => {
                             placeholder='Title'
                             type='text'
                             value={title}
+                            required
                         />
                         <input
                             className='input-year'
                             id='publishing-year'
+                            maxLength={4}
                             onChange={onYearChange}
                             placeholder='Publishing year'
-                            type='number'
+                            type='text'
                             value={year}
+                            required
                         />
                     </div>
 
