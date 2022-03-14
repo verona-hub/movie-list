@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import axios from 'axios';
+
 
 // Components
 import CreateMovie from "./components/Pages/CreateMovie";
@@ -19,27 +21,70 @@ const App = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const formdata = new FormData();
-        formdata.append("identifier", email);
-        formdata.append("password", password);
+        const data = new FormData();
+        data.append('identifier', email);
+        data.append('password', password);
 
-        const requestOptions = {
-            method: 'POST',
-            body: formdata,
+        const config = {
+            method: 'post',
+            url: 'https://zm-movies-assignment.herokuapp.com/api/auth/local',
+            headers: {},
+            data : data,
             redirect: 'follow'
         };
 
-        await fetch("https://zm-movies-assignment.herokuapp.com/api/auth/local", requestOptions)
+        const config2 = {
+            method: 'get',
+            url: 'https://zm-movies-assignment.herokuapp.com/api/movies?populate=*',
+            headers: { },
+            redirect: 'follow'
+        };
 
-            .then(response => {
-                console.log(response)
-                return response
-            })
-            .then( (response) => {
-                response.status === 200 && setLoggedIn(true) && setError('');
-                response.status === 400 && setError(response.statusText);
-            })
-            .catch(error => console.log('error', error));
+        try {
+            const response = await axios.all([
+                axios(config)
+                    .then(function (response) {
+                        console.log(response.data.jwt);
+                        response.status === 200 && setLoggedIn(true) && setError('');
+                        response.status === 400 && setError(response.statusText);
+                    }),
+                axios(config2)
+                    .then(function (response) {
+                        // console.log(JSON.stringify(response.data));
+                        console.log(response);
+                    })
+            ]);
+        } catch (error) {
+            console.log(error);
+        }
+
+
+        // const formdata = new FormData();
+        // formdata.append("identifier", email);
+        // formdata.append("password", password);
+        //
+        // const requestOptions = {
+        //     method: 'POST',
+        //     body: formdata,
+        //     redirect: 'follow',
+        //     url: "https://zm-movies-assignment.herokuapp.com/api/auth/local"
+        // };
+        //
+        // await fetch(requestOptions.url, requestOptions)
+        // .then( (response) => {
+        //     console.log(response)
+        //     response.status === 200 && setLoggedIn(true) && setError('');
+        //     response.status === 400 && setError(response.statusText);
+        // })
+        // .catch(error => console.log('error', error));
+
+
+        // .then(response => response.text())
+        // .then(result => console.log(result))
+        // .catch(error => console.log('error', error));
+
+
+
     };
 
     const onEmailChange = e => {

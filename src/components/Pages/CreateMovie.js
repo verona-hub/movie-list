@@ -7,14 +7,6 @@ const CreateMovie = () => {
     const [title, setTitle] = useState('');
     const [year, setYear] = useState('');
 
-    const onTitleChange = e => {
-        setTitle(e.target.value);
-    };
-
-    const onYearChange = e => {
-        setYear(e.target.value);
-    };
-
     const onCancel = () => {
         setTitle('');
         setYear('');
@@ -96,7 +88,7 @@ const CreateMovie = () => {
                         <input
                             className='input-title'
                             id='title'
-                            onChange={onTitleChange}
+                            onChange={e => { setTitle(e.target.value); }}
                             placeholder='Title'
                             type='text'
                             value={title}
@@ -106,7 +98,7 @@ const CreateMovie = () => {
                             className='input-year'
                             id='publishing-year'
                             maxLength={4}
-                            onChange={onYearChange}
+                            onChange={e => { setYear(e.target.value); }}
                             placeholder='Publishing year'
                             type='text'
                             value={year}
