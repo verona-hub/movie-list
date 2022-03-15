@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import './App.css';
 import axios from 'axios';
-
 
 // Components
 import CreateMovie from "./components/Pages/CreateMovie";
@@ -16,6 +15,7 @@ const App = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
+    const [token, setToken] = useState('');
     const [error, setError] = useState('');
 
     const onSubmit = async (e) => {
@@ -27,6 +27,7 @@ const App = () => {
 
         const loginRequest = {
             auth: { identifier: email, password: password},
+            data: data,
             method: 'POST',
             redirect: 'follow',
             url: "https://zm-movies-assignment.herokuapp.com/api/auth/local"
@@ -41,20 +42,21 @@ const App = () => {
 
         // Axios OK
         try {
-            await axios.post(loginRequest.url, data)
-                .then(function (response){
+            await axios(loginRequest)
+                .then(response => {
                     console.log(response);
-                    if(response.status === 200){
-                        setLoggedIn(true) && setError('');
-                    }
-                    response.status === 200 && setLoggedIn(true) && setError('');
+
+                    // if(response.status === 200){
+                    //     // setLoggedIn(true) && setError('');
+                    //     localStorage.setItem('token', response.data.jwt);
+                    // }
+                    response.status === 200
+                            && setLoggedIn(true)
+                            && setError('')
+                            && localStorage.setItem('token', response.data.jwt);
+
                     response.status === 400 && setError(response.statusText);
                 })
-                .then()
-                .catch(function(error){
-                        console.log(error)
-                    }
-                )
         } catch (err) {
             console.log(err)
         }
