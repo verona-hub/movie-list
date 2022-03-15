@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 
 const CreateMovie = () => {
 
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState([]);
     const [title, setTitle] = useState('');
     const [year, setYear] = useState('');
 
@@ -13,48 +13,68 @@ const CreateMovie = () => {
         console.log('Request cancelled!');
     };
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
 
+        // Fetch
         const formdata = new FormData();
-        formdata.append("data", title);
-        // formdata.append("data", year);
-        formdata.append("files.poster", image, "file");
-
+        formdata.append("name", title);
+        formdata.append("publicationYear", year);
+        formdata.append("files.poster", image[1], "file");
 
         const requestOptions = {
             method: 'POST',
             body: formdata,
-            redirect: 'follow'
+            redirect: 'follow',
+            url: "https://zm-movies-assignment.herokuapp.com/api/movies"
         };
 
-        fetch("https://zm-movies-assignment.herokuapp.com/api/movies", requestOptions)
+        fetch(requestOptions.url, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
 
-        console.log('Request submitted!')
+        console.log('Request submitted!');
+        for(const [k,v] of formdata) {console.log(k,v)}
+
+        // console.log(`Title: ${title}`);
+        // console.log(`Year: ${year}`);
+        // console.log(image[1]);
+
+        // Axios
+        // const formdata = new FormData();
+        // formdata.append('name', title);
+        // formdata.append('publicationYear', year);
+        // formdata.append('files.poster', image[1]);
+        //
+        // const config = {
+        //     method: 'POST',
+        //     url: 'https://zm-movies-assignment.herokuapp.com/api/movies',
+        //     headers: {},
+        //     formdata : formdata
+        // };
+        //
+        // await axios(config)
+        //     .then( response => {
+        //         console.log(JSON.stringify(response.formdata));
+        //     })
+        //     .catch( error => {
+        //         console.log(error);
+        //     });
     };
 
-    const onDragOver = e => {
-        e.preventDefault();
-    };
-
-    const onDragEnter = e => {
-        e.preventDefault();
-    };
-
-    const onDragLeave = e => {
+    const onDrag = e => {
         e.preventDefault();
     };
 
     const onDrop = e => {
         e.preventDefault();
 
-        const file = e.dataTransfer.files;
-        checkFileType(file);
-        setImage(file[0]);
+        const droppedFile = e.dataTransfer.files;
+        // checkFileType(file);
 
-        console.log(file[0].name);
+        const fileArr = Object.entries(droppedFile);
+        const image = fileArr[0];
+        setImage(image);
     };
 
     const checkFileType = file => {
@@ -67,9 +87,9 @@ const CreateMovie = () => {
 
             <section
                 className="image-wrapper"
-                onDragOver={onDragOver}
-                onDragEnter={onDragEnter}
-                onDragLeave={onDragLeave}
+                onDragOver={onDrag}
+                onDragEnter={onDrag}
+                onDragLeave={onDrag}
                 onDrop={onDrop}
             >
                 <h2> Create a new movie </h2>

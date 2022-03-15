@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import axios from 'axios';
 
@@ -25,19 +25,17 @@ const App = () => {
         data.append('identifier', email);
         data.append('password', password);
 
+        // for(const [k,v] of data) {console.log(k,v)};
+
         const loginRequest = {
-            auth: { identifier: email, password: password},
             data: data,
+            headers: {
+                "content-type": "application/json",
+                "Authorization": "Bearer "+ token,
+            },
             method: 'POST',
             redirect: 'follow',
             url: "https://zm-movies-assignment.herokuapp.com/api/auth/local"
-        };
-
-        const listRequest = {
-            method: 'get',
-            url: 'https://zm-movies-assignment.herokuapp.com/api/movies?populate=*',
-            headers: { populate: '*' },
-            redirect: 'follow'
         };
 
         // Axios OK
@@ -46,131 +44,18 @@ const App = () => {
                 .then(response => {
                     console.log(response);
 
-                    // if(response.status === 200){
-                    //     // setLoggedIn(true) && setError('');
-                    //     localStorage.setItem('token', response.data.jwt);
-                    // }
                     response.status === 200
-                            && setLoggedIn(true)
-                            && setError('')
-                            && localStorage.setItem('token', response.data.jwt);
+                    && setLoggedIn(true)
+                    && setError('')
+                    && localStorage.setItem('token', response.data.jwt)
+                    && setToken(response.data.jwt);
 
                     response.status === 400 && setError(response.statusText);
                 })
+
         } catch (err) {
             console.log(err)
         }
-
-
-        // Not working - error 403
-        // let one = loginRequest.url;
-        // let two = listRequest.url;
-        //
-        // const requestOne = axios.post(one, data);
-        // const requestTwo = axios.get(two);
-        //
-        // await axios
-        //     .all([requestOne, requestTwo])
-        //     .then(
-        //         axios.spread((...responses) => {
-        //             const responseOne = responses[0];
-        //             const responseTwo = responses[1];
-        //
-        //             // responses[0].status === 200 && setLoggedIn(true) && setError('');
-        //             // use/access the results
-        //             console.log(responseOne, responseTwo);
-        //         })
-        //     )
-        //     .catch(errors => {
-        //         // react on errors.
-        //         console.error(errors);
-        //     });
-
-
-        // await axios.post(loginRequest.url, data)
-        //     .then(function (response){
-        //         console.log(response);
-        //                 response.status === 200 && setLoggedIn(true) && setError('');
-        //                 response.status === 400 && setError(response.statusText);
-        //     })
-        //     .catch(function(error){
-        //             console.log(error)
-        //         }
-        //     )
-
-        // function getLogin(){
-        //     return axios.post(loginRequest.url,  data )
-        // }
-        //
-        // function getList(){
-        //     return axios.get(listRequest.url);
-        // }
-        //
-        // Promise.all([getLogin(), getList()])
-        //     .then( function (results) {
-        //         const axios1 = results[0];
-        //         const axios2 = results[1];
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     })
-        // ;
-
-
-        // Multiple Axios
-        // const axios1 = axios.post(loginRequest.url);
-        // const axios2 = axios.get(listRequest.url);
-        //
-        // await Promise.all([ axios1, axios2])
-        //     .then(axios.spread( (...allData) => {
-        //         const data1 = allData[0];
-        //         const data2 = allData[1];
-        //
-        //         console.log(data1);
-        //         console.log(data2);
-        //     }))
-        //     .catch(error => {
-        //         console.log(error)
-        //     })
-
-
-        // Axios OK
-        // await axios
-        //     .post(loginRequest.url, data)
-        //     .then(response => {
-        //         console.log(response)
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
-
-
-        // Fetch
-        // await fetch(loginRequest.url, loginRequest)
-        //     .then( (response) => {
-        //         console.log(response)
-        //         response.status === 200 && setLoggedIn(true) && setError('');
-        //         response.status === 400 && setError(response.statusText);
-        //     })
-        //     .then()
-        //     .catch(error => console.log('error', error));
-
-
-        // Alternative Axios ALL
-        // const url = "https://zm-movies-assignment.herokuapp.com/api/auth/local";
-        // const url2 = "https://zm-movies-assignment.herokuapp.com/api/movies?populate=*";
-        // const axios1 = axios.post(url);
-        // const axios2 = axios.get(url2);
-        //
-        // await axios.all([ axios1, axios2]).then(
-        //     axios.spread( (...allData) => {
-        //         const data1 = allData[0];
-        //         const data2 = allData[1];
-        //
-        //         console.log(data1);
-        //         console.log(data);
-        //     })
-        // )
     };
 
     const onEmailChange = e => {
@@ -196,7 +81,7 @@ const App = () => {
                             />
                         } />
                         :
-                        <Route path='/' element={ <MovieList/> }/>
+                        <Route path='/' element={ <MovieList token={token} /> }/>
                     }
                     <Route path='/create-movie' element={ <CreateMovie/> } />
 
