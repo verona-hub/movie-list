@@ -26,8 +26,8 @@ const App = () => {
         data.append('password', password);
 
         const loginRequest = {
+            auth: { identifier: email, password: password},
             method: 'POST',
-            body: data,
             redirect: 'follow',
             url: "https://zm-movies-assignment.herokuapp.com/api/auth/local"
         };
@@ -35,35 +35,101 @@ const App = () => {
         const listRequest = {
             method: 'get',
             url: 'https://zm-movies-assignment.herokuapp.com/api/movies?populate=*',
-            headers: { },
+            headers: { populate: '*' },
             redirect: 'follow'
         };
 
-        const axios1 = axios(loginRequest);
-        const axios2 = axios(listRequest);
+        // Axios OK
+        try {
+            await axios.post(loginRequest.url, data)
+                .then(function (response){
+                    console.log(response);
+                    if(response.status === 200){
+                        setLoggedIn(true) && setError('');
+                    }
+                    response.status === 200 && setLoggedIn(true) && setError('');
+                    response.status === 400 && setError(response.statusText);
+                })
+                .then()
+                .catch(function(error){
+                        console.log(error)
+                    }
+                )
+        } catch (err) {
+            console.log(err)
+        }
 
-        await axios.all([ axios1, axios2])
-            .then(axios.spread( (...allData) => {
-                const data1 = allData[0];
-                const data2 = allData[1];
 
-                console.log(data1);
-                console.log(data2);
-            }))
-            .catch(error => {
-                console.log(error)
-            })
-
+        // Not working - error 403
+        // let one = loginRequest.url;
+        // let two = listRequest.url;
         //
-        // await axios.all([ axios1, axios2]).then(
-        //     axios.spread( (...allData) => {
+        // const requestOne = axios.post(one, data);
+        // const requestTwo = axios.get(two);
+        //
+        // await axios
+        //     .all([requestOne, requestTwo])
+        //     .then(
+        //         axios.spread((...responses) => {
+        //             const responseOne = responses[0];
+        //             const responseTwo = responses[1];
+        //
+        //             // responses[0].status === 200 && setLoggedIn(true) && setError('');
+        //             // use/access the results
+        //             console.log(responseOne, responseTwo);
+        //         })
+        //     )
+        //     .catch(errors => {
+        //         // react on errors.
+        //         console.error(errors);
+        //     });
+
+
+        // await axios.post(loginRequest.url, data)
+        //     .then(function (response){
+        //         console.log(response);
+        //                 response.status === 200 && setLoggedIn(true) && setError('');
+        //                 response.status === 400 && setError(response.statusText);
+        //     })
+        //     .catch(function(error){
+        //             console.log(error)
+        //         }
+        //     )
+
+        // function getLogin(){
+        //     return axios.post(loginRequest.url,  data )
+        // }
+        //
+        // function getList(){
+        //     return axios.get(listRequest.url);
+        // }
+        //
+        // Promise.all([getLogin(), getList()])
+        //     .then( function (results) {
+        //         const axios1 = results[0];
+        //         const axios2 = results[1];
+        //     })
+        //     .catch(error => {
+        //         console.log(error)
+        //     })
+        // ;
+
+
+        // Multiple Axios
+        // const axios1 = axios.post(loginRequest.url);
+        // const axios2 = axios.get(listRequest.url);
+        //
+        // await Promise.all([ axios1, axios2])
+        //     .then(axios.spread( (...allData) => {
         //         const data1 = allData[0];
         //         const data2 = allData[1];
         //
         //         console.log(data1);
-        //         console.log(data);
+        //         console.log(data2);
+        //     }))
+        //     .catch(error => {
+        //         console.log(error)
         //     })
-        // )
 
 
         // Axios OK
