@@ -15,8 +15,9 @@ const App = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
-    const [token, setToken] = useState('');
     const [error, setError] = useState('');
+
+    const token = localStorage.getItem('token');
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -30,13 +31,15 @@ const App = () => {
         const loginRequest = {
             data: data,
             headers: {
-                "content-type": "application/json",
-                "Authorization": "Bearer "+ token,
+                'content-type': 'application/json',
+                'Authorization': token
             },
             method: 'POST',
             redirect: 'follow',
             url: "https://zm-movies-assignment.herokuapp.com/api/auth/local"
         };
+
+
 
         // Axios OK
         try {
@@ -48,7 +51,6 @@ const App = () => {
                     && setLoggedIn(true)
                     && setError('')
                     && localStorage.setItem('token', response.data.jwt)
-                    && setToken(response.data.jwt);
 
                     response.status === 400 && setError(response.statusText);
                 })
@@ -81,7 +83,7 @@ const App = () => {
                             />
                         } />
                         :
-                        <Route path='/' element={ <MovieList token={token} /> }/>
+                        <Route path='/' element={ <MovieList token={token}/> }/>
                     }
                     <Route path='/create-movie' element={ <CreateMovie/> } />
 

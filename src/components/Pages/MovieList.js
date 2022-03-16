@@ -5,19 +5,21 @@ import axios from 'axios';
 
 const MovieList = ({ token }) => {
     const navigate = useNavigate();
-    // console.log(token)
+    console.log(token)
 
     const checkMovies = async () => {
 
         const data = new FormData();
         data.append('populate', '*');
 
-
         const listRequest = {
             data: data,
             method: 'GET',
             url: 'https://zm-movies-assignment.herokuapp.com/api/movies?populate=*',
-            headers: { },
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': { token }
+            },
             redirect: 'follow'
         };
 
