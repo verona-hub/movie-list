@@ -15,7 +15,6 @@ const SignIN = ({ onSubmit, onEmailChange, onPasswordChange, email, password }) 
                         type='email'
                         value={ email }
                         autoFocus
-                        required
                     />
 
                     <input
@@ -24,7 +23,6 @@ const SignIN = ({ onSubmit, onEmailChange, onPasswordChange, email, password }) 
                         placeholder='Password'
                         type='password'
                         value={ password }
-                        required
                     />
 
                     <input

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 // Components
 import CreateMovie from "./components/Pages/CreateMovie";
-import LoginError from './components/Utilities/LoginError';
+import ErrorModal from './components/Utilities/ErrorModal';
 import MovieList from './components/Pages/MovieList';
 import SignIN from './components/Pages/SignIN';
 
@@ -15,7 +15,7 @@ const App = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState(false);
 
     const token = localStorage.getItem('token');
 
@@ -26,7 +26,10 @@ const App = () => {
         data.append('identifier', email);
         data.append('password', password);
 
-        // for(const [k,v] of data) {console.log(k,v)};
+        // Form validation
+        (email.length < 1 || password.length < 1) && setError(true);
+
+        // for(const [k,v] of data) {console.log(k,v)}
 
         const loginRequest = {
             data: data,
@@ -39,8 +42,6 @@ const App = () => {
             url: "https://zm-movies-assignment.herokuapp.com/api/auth/local"
         };
 
-
-
         // Axios OK
         try {
             await axios(loginRequest)
@@ -52,7 +53,7 @@ const App = () => {
                     && setError('')
                     && localStorage.setItem('token', response.data.jwt)
 
-                    response.status === 400 && setError(response.statusText);
+                    // response.status === 400 && setError(response.statusText);
                 })
 
         } catch (err) {
@@ -66,6 +67,10 @@ const App = () => {
 
     const onPasswordChange = e => {
         setPassword(e.target.value);
+    };
+
+    const closeModal = () => {
+        setError(false);
     };
 
     return (
@@ -89,7 +94,7 @@ const App = () => {
 
                 </Routes>
                 { /*Display Error message if wrong password and if not logged in */
-                    error && !loggedIn && <LoginError error={ error }/>
+                    error && !loggedIn && <ErrorModal closeModal={closeModal}/>
                 }
 
                 <footer>
@@ -102,4 +107,3 @@ const App = () => {
 };
 
 export default App;
-

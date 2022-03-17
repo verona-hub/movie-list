@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 const CreateMovie = () => {
 
@@ -34,7 +34,7 @@ const CreateMovie = () => {
             .catch(error => console.log('error', error));
 
         console.log('Request submitted!');
-        for(const [k,v] of formdata) {console.log(k,v)}
+        // for(const [k,v] of formdata) {console.log(k,v)}
 
         // console.log(`Title: ${title}`);
         // console.log(`Year: ${year}`);
@@ -77,10 +77,10 @@ const CreateMovie = () => {
         setImage(image);
     };
 
-    const checkFileType = file => {
-        const validType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-        return validType.indexOf(file.type) !== -1;
-    };
+    // const checkFileType = file => {
+    //     const validType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    //     return validType.indexOf(file.type) !== -1;
+    // };
 
     return (
         <div className="CreateMovie">

@@ -9,18 +9,13 @@ const MovieList = ({ token }) => {
 
     const checkMovies = async () => {
 
-        const data = new FormData();
-        data.append('populate', '*');
-
         const listRequest = {
-            data: data,
             method: 'GET',
             url: 'https://zm-movies-assignment.herokuapp.com/api/movies?populate=*',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': { token }
-            },
-            redirect: 'follow'
+                'Authorization': 'Bearer ' + token
+            }
         };
 
         // Axios
@@ -67,10 +62,12 @@ const MovieList = ({ token }) => {
     //     .catch(error => console.log('error', error));
 
     return (
-        <div>
-            <h2> My Movies </h2>
-            <button onClick={() => navigate('/create-movie')}> Add a new movie </button>
-            <button onClick={ checkMovies }> Check movies </button>
+        <div className='MovieList'>
+            <h2> Your movies </h2>
+            <div className='button-wrapper'>
+                <button className='button' onClick={ () => navigate('/create-movie') }> Add a new movie</button>
+                {/*<button className='button' onClick={ checkMovies }> Check movies </button>*/}
+            </div>
         </div>
     );
 };
